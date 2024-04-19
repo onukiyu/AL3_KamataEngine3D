@@ -69,4 +69,9 @@ private: // メンバ変数
 
 	//デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
+
+	//サウンドデータハンドル
+	uint32_t soundDetaHandle_ = 0;
+	//音声再生ハンドル
+	uint32_t voiceHandle_ = 0;
 };

@@ -45,6 +45,12 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
+
+	//サウンドデータ読み込み
+	soundDetaHandle_ = audio_->LoadWave("fanfare.wav");
+	//音声再生
+	audio_->PlayWave(soundDetaHandle_);
+	voiceHandle_ = audio_->PlayWave(soundDetaHandle_, true);
 }
 
 void GameScene::Update() {
@@ -72,6 +78,12 @@ void GameScene::Update() {
 
 	//デバッグカメラの更新
 	debugCamera_->Update();
+
+	//スペースキーを押した瞬間
+	if (input_->TriggerKey(DIK_SPACE)) {
+		//音声停止
+		audio_->StopWave(voiceHandle_);
+	}
 }
 
 void GameScene::Draw() {

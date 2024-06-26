@@ -11,6 +11,7 @@
 #include <vector>
 #include "DebugCamera.h"
 #include "Skydome.h"
+#include "MapChipField.h"
 
 /// <summary>
 /// ゲームシーン
@@ -56,7 +57,7 @@ private: // メンバ変数
 	/// </summary>
 	
 	//テクスチャハンドル
-	uint32_t textureHandle_ = 0;
+	//uint32_t textureHandle_ = 0;
 
 	//3Dモデルデータ
 	Model* model_ = nullptr;
@@ -81,4 +82,9 @@ private: // メンバ変数
 
 	//3Dモデル
 	Model* modelSkydome_ = nullptr;
+
+	//マップチップフィールド
+	MapChipField* mapChipField_;
+
+	void GenerateBlocks();
 };

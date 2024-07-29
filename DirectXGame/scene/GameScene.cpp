@@ -41,13 +41,13 @@ void GameScene::Initialize() {
 	//3Dモデルデータの生成
 	model_ = Model::CreateFromOBJ("player");
 
+	//座標をマップチップ番号で指定
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(2, 19); 
+
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
-	// 自キャラの生成
-	player_ = new Player();
-	//自キャラの初期化
-	player_->Initialize(model_,&viewProjection_);
+	
 
 	//ブロック3Dモデルデータの生成
 	modelBlock_ = Model::CreateFromOBJ("block");
@@ -104,6 +104,12 @@ void GameScene::Initialize() {
 	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 
 	GenerateBlocks();//23,24ページ
+	
+	// 自キャラの生成
+	player_ = new Player();
+	//自キャラの初期化
+	playerPosition = mapChipField_->GetMapChipPositionByIndex(3, 18);
+	player_->Initialize(model_,&viewProjection_, playerPosition);
 }
 
 void GameScene::Update() {

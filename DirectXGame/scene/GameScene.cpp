@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "MathUtilityForText.h"
 #include "MapChipField.h"
+#include "CameraController.h"
 #include <cassert>
 
 GameScene::GameScene() {}
@@ -28,6 +29,8 @@ GameScene::~GameScene() {
 	delete modelSkydome_;
 	//マップチップフィールドの解放
 	delete mapChipField_;
+
+
 }
 
 void GameScene::Initialize() {
@@ -110,6 +113,16 @@ void GameScene::Initialize() {
 	//自キャラの初期化
 	playerPosition = mapChipField_->GetMapChipPositionByIndex(3, 18);
 	player_->Initialize(model_,&viewProjection_, playerPosition);
+
+	cameraController_ = new CameraController();
+	cameraController_->Initialize();
+	
+	cameraController_->SetTarget(player_);
+	cameraController_->Reset();
+
+	CameraController::Rect cameraArea = {12.0f, 100 - 12.0f, 6.0f, 6.0f};
+
+	cameraController_->SetMovableArea(cameraArea);
 }
 
 void GameScene::Update() {
@@ -170,11 +183,15 @@ void GameScene::Update() {
 		//ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
 	} else {
+		// デバッグカメラのビュー行列
+		viewProjection_.matView = cameraController_->GetViewProjection().matView;
+		// デバッグカメラのプロジェクション行列
+		viewProjection_.matProjection = cameraController_->GetViewProjection().matProjection;
 		//ビュープロジェクション行列の更新と転送
-		viewProjection_.UpdateMatrix();
+		viewProjection_.TransferMatrix();
 	}
 
-	
+	cameraController_->Update();
 
 }
 
@@ -260,3 +277,5 @@ void GameScene::GenerateBlocks() {
 		}
 	}
 }
+
+

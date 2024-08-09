@@ -28,6 +28,8 @@ public:
 
 	LRDirection lrDirection_ = LRDirection::kRight;
 
+	const WorldTransform& GetWorldTransform() const { return worldTransform_; }
+
 	///< summary>
 	/// 更新
 	///</summary>
@@ -56,6 +58,8 @@ public:
 	//ジャンプ速度（上方向）
 	static inline const float kJumpAcceleration = 1.5f;
 
+	const Vector3& GetVelocity() const { return velocity_; }
+
 	private : // メンバ変数
 
 	//ワールド変換データ
@@ -66,6 +70,7 @@ public:
 	uint32_t textureHandle_ = 0u;
 
 	ViewProjection* viewProjection_ = nullptr;
+	
 	
 
 };

@@ -2,6 +2,10 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "MathUtilityForText.h"
+#include "ViewProjection.h"
+
+class MapChipField;
+
 class Player {
 public:
 	///<summary>
@@ -28,7 +32,7 @@ public:
 
 	LRDirection lrDirection_ = LRDirection::kRight;
 
-	const WorldTransform& GetWorldTransform() const { return worldTransform_; }
+	
 
 	///< summary>
 	/// 更新
@@ -39,6 +43,14 @@ public:
 	/// 描画
 	///</summary>
 	void Draw();
+
+
+	//追加
+	const WorldTransform& GetWorldTransform() const { return worldTransform_; }
+
+	const Vector3& GetVelocity() const { return velocity_; }
+
+	void SetMapChipField(MapChipField* mapChipField) { mapChipField_ = mapChipField; }
 
 	//旋回開始時の角度
 	float turnFirstRotationY_ = 0.0f;
@@ -56,11 +68,11 @@ public:
 	//重力落下速度（下方向）
 	static inline const float kLimitFallSpeed = 0.2f;
 	//ジャンプ速度（上方向）
-	static inline const float kJumpAcceleration = 1.5f;
+	static inline const float kJumpAcceleration = 1.0f;
 
-	const Vector3& GetVelocity() const { return velocity_; }
+	
 
-	private : // メンバ変数
+	private: // メンバ変数
 
 	//ワールド変換データ
 	WorldTransform worldTransform_;
@@ -71,6 +83,49 @@ public:
 
 	ViewProjection* viewProjection_ = nullptr;
 	
-	
+	//マップチップによるフィールド
+	MapChipField* mapChipField_ = nullptr;
 
+	//キャラクターの当たり判定サイズ
+	static inline const float kWidth = 0.8f;
+	static inline const float kHeight = 0.8f;
+
+	//1.移動入力
+	void InputMove();
+
+	//2.マップ衝突判定
+	struct CollisionMapInfo {
+		bool ceiling = false;
+		bool landing = false;
+		bool hitwall = false;
+		Vector3 move;
+	};
+
+	//角
+	enum Corner {
+		kRightBottom, //右下
+		kLightBottom, //左下
+		kRightTop,    //右上
+		kLeftTop,     //左上
+
+		kNumCorner    //要素数
+	};
+
+	void CheckMapCollision(CollisionMapInfo& info);
+	void CheckMapCollisionUp(CollisionMapInfo& info);
+
+	void CheckMapCollisionDown(CollisionMapInfo& info);
+	void CheckMapCollisionRight(CollisionMapInfo& info);
+	void CheckMapCollisionLeft(CollisionMapInfo& info);
+
+	//3.判定結果を反映して移動させる
+	void CheckMapMove(CollisionMapInfo& info);
+
+	//4.天井に接触している場合の処理
+	void CheckMapCeiling(CollisionMapInfo& info);
+
+	Vector3 CornerPosition(const Vector3& center, Corner corner);
+	static inline const float kBlank = 0.04f;
+	//7.旋回制御
+	void AnimateTurn();
 };

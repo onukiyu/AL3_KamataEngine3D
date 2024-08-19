@@ -103,6 +103,7 @@ void GameScene::Initialize() {
 	//天球の初期化
 	skydome_->Initialize(modelSkydome_, &viewProjection_);
 
+
 	mapChipField_ = new MapChipField;
 	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 
@@ -113,6 +114,8 @@ void GameScene::Initialize() {
 	//自キャラの初期化
 	playerPosition = mapChipField_->GetMapChipPositionByIndex(3, 18);
 	player_->Initialize(model_,&viewProjection_, playerPosition);
+
+	player_->SetMapChipField(mapChipField_);
 
 	cameraController_ = new CameraController();
 	cameraController_->Initialize();

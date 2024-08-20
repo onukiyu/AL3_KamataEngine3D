@@ -60,8 +60,6 @@ public:
 	//旋回時間<秒>
 	static inline const float kTimeTurn = 0.3f;
 
-	//接地状態フラグ
-	bool onGround_ = true;
 
 	//重力加速度（下方向）
 	static inline const float kGravityAcceleration = 0.2f;
@@ -70,7 +68,16 @@ public:
 	//ジャンプ速度（上方向）
 	static inline const float kJumpAcceleration = 1.0f;
 
-	
+	//接地状態フラグ
+	bool onGround_ = true;
+
+	//着地時の速度減衰率
+	static inline const float kAttenuationLanding = 0.1f;
+
+	static inline const float kAttenuationWall = 0.1f;
+
+	//落下用
+	static inline const float kGroundSearchHeight = 0.06f;
 
 	private: // メンバ変数
 
@@ -104,7 +111,7 @@ public:
 	//角
 	enum Corner {
 		kRightBottom, //右下
-		kLightBottom, //左下
+		kLeftBottom, //左下
 		kRightTop,    //右上
 		kLeftTop,     //左上
 
@@ -128,4 +135,10 @@ public:
 	static inline const float kBlank = 0.04f;
 	//7.旋回制御
 	void AnimateTurn();
+
+	//6.接地状態の切り替え処理
+	void CheckMapLanding(const CollisionMapInfo& info);
+
+	//5.壁に接触している場合の処理
+	void CheckMapWall(const CollisionMapInfo& info);
 };

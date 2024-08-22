@@ -18,11 +18,15 @@ public:
 
 	Vector3 velocity_ = {};
 
+	//加速
 	static inline const float kAcceleration = (float)0.01;
+	//減速
+	static inline const float kAttenuation = (float)0.02;
+	//最大速度
+	static inline const float kLimitRunSpeed = (float)1.0f;
 
-	static inline const float kAttenuation = (float)0.05;
-
-	static inline const float kLimitRunSpeed = (float)0.3;
+	//着地時の速度減衰率
+	static inline const float kAttenuationWall = 0.1f;
 
 	//左右
 	enum class LRDirection {
@@ -62,11 +66,11 @@ public:
 
 
 	//重力加速度（下方向）
-	static inline const float kGravityAcceleration = 0.2f;
+	static inline const float kGravityAcceleration = 0.05f;
 	//重力落下速度（下方向）
-	static inline const float kLimitFallSpeed = 0.2f;
+	static inline const float kLimitFallSpeed = 0.5f;
 	//ジャンプ速度（上方向）
-	static inline const float kJumpAcceleration = 1.0f;
+	static inline const float kJumpAcceleration = 0.5f;
 
 	//接地状態フラグ
 	bool onGround_ = true;
@@ -74,7 +78,7 @@ public:
 	//着地時の速度減衰率
 	static inline const float kAttenuationLanding = 0.1f;
 
-	static inline const float kAttenuationWall = 0.1f;
+	
 
 	//落下用
 	static inline const float kGroundSearchHeight = 0.06f;

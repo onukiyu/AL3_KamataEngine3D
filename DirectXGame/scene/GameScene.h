@@ -13,6 +13,7 @@
 #include "Skydome.h"
 #include "MapChipField.h"
 #include "CameraController.h"
+#include "Enemy.h"
 
 /// <summary>
 /// ゲームシーン
@@ -53,6 +54,10 @@ private: // メンバ変数
 	//自キャラ
 	Player* player_ = nullptr;
 
+
+	Enemy* enemy_ = nullptr;
+
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
@@ -62,6 +67,8 @@ private: // メンバ変数
 
 	//3Dモデルデータ
 	Model* model_ = nullptr;
+
+	Model* modelEnemy_ = nullptr;
 
 	//ビュープロジェクション
 	ViewProjection viewProjection_;

@@ -6,6 +6,8 @@
 
 class MapChipField;
 
+class Enemy;
+
 class Player {
 public:
 	///<summary>
@@ -17,6 +19,8 @@ public:
 	void Initialize(Model* model, ViewProjection* viewProjection, const Vector3& position);
 
 	Vector3 velocity_ = {};
+
+	
 
 	//加速
 	static inline const float kAcceleration = (float)0.01;
@@ -82,6 +86,16 @@ public:
 
 	//落下用
 	static inline const float kGroundSearchHeight = 0.06f;
+	
+	
+	// ワールド座標を取得
+	Vector3 GetWorldPosition();
+
+	//AABBを取得
+	AABB GetAABB();
+
+	// 衝突応用
+	void OnCollision(const Enemy* enemy);
 
 	private: // メンバ変数
 
@@ -145,4 +159,7 @@ public:
 
 	//5.壁に接触している場合の処理
 	void CheckMapWall(const CollisionMapInfo& info);
+
+	
+
 };

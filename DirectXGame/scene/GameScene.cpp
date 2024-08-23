@@ -30,7 +30,10 @@ GameScene::~GameScene() {
 	//マップチップフィールドの解放
 	delete mapChipField_;
 
-	delete enemy_;
+	for (Enemy* enemy : enemies_) {
+		delete enemy;
+	}
+	
 
 	delete modelEnemy_;
 }
@@ -51,7 +54,7 @@ void GameScene::Initialize() {
 	//座標をマップチップ番号で指定
 	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(2, 19); 
 
-	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(12, 19); 
+	//Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(12, 19); 
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
@@ -123,11 +126,16 @@ void GameScene::Initialize() {
 
 	player_->SetMapChipField(mapChipField_);
 
+	for (int32_t i = 0; i < 3; ++i) {
+		Enemy* newEnemy_ = new Enemy();
+		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(11 + i * 3, 18 - i);
+		newEnemy_->Initialize(modelEnemy_, &viewProjection_, enemyPosition);
 
-	enemy_ = new Enemy();
+		enemies_.push_back(newEnemy_);
+	}
+	
 
-	enemyPosition = mapChipField_->GetMapChipPositionByIndex(13, 18);
-	enemy_->Initialize(modelEnemy_, &viewProjection_, enemyPosition);
+	
 
 
 
@@ -151,7 +159,9 @@ void GameScene::Update() {
 	//自キャラの更新
 	player_->Update();
 	
-	enemy_->Update();
+	for (Enemy* enemy : enemies_) {
+		enemy->Update();
+	}
 
 	//天球の更新
 	skydome_->Update();
@@ -216,6 +226,8 @@ void GameScene::Update() {
 
 	cameraController_->Update();
 
+	//全ての当たり判定を行う
+	CheckAllColisions();
 }
 
 void GameScene::Draw() {
@@ -248,7 +260,9 @@ void GameScene::Draw() {
 	//自キャラの描画
 	player_->Draw();
 	
-	enemy_->Draw();
+	for (Enemy* enemy : enemies_) {
+		enemy->Draw();
+	}
 
 	skydome_->Draw();
 
@@ -302,5 +316,37 @@ void GameScene::GenerateBlocks() {
 		}
 	}
 }
+
+//自キャラと敵キャラの当たり判定
+void GameScene::CheckAllColisions()
+{
+#pragma region 
+	{
+		//判定対称1と2の座標
+		AABB aabb1, aabb2;
+
+		//自キャラの座標
+		aabb1 = player_->GetAABB();
+
+		//自キャラと敵弾全ての当たり判定
+		for (Enemy* enemy : enemies_) {
+			//敵弾の座標
+			aabb2 = enemy->GetAABB();
+
+			//AABB同士の交差判定
+			if (IsCollision(aabb1, aabb2)) {
+				//自キャラの衝突時コールバックを呼び出す
+				player_->OnCollision(enemy);
+				//敵弾の衝突時コールバックを呼び出す
+				enemy->OnCollision(player_);
+			}
+
+		}
+	}
+
+
+}
+
+
 
 

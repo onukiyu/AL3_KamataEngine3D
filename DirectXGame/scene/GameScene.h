@@ -55,7 +55,8 @@ private: // メンバ変数
 	Player* player_ = nullptr;
 
 
-	Enemy* enemy_ = nullptr;
+	//Enemy* enemy_ = nullptr;
+	std::list<Enemy*> enemies_;
 
 
 	/// <summary>
@@ -97,4 +98,6 @@ private: // メンバ変数
 	CameraController* cameraController_ = nullptr;
 
 	void GenerateBlocks();
+
+	void CheckAllColisions();
 };

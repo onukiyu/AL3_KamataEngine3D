@@ -36,6 +36,8 @@ GameScene::~GameScene() {
 	
 
 	delete modelEnemy_;
+
+	delete modelDeathParticles_;
 }
 
 void GameScene::Initialize() {
@@ -150,7 +152,13 @@ void GameScene::Initialize() {
 
 	cameraController_->SetMovableArea(cameraArea);
 
-	
+	player_->Update();
+	Vector3 position = player_->GetWorldPosition();
+
+
+	modelDeathParticles_= Model::CreateFromOBJ("deathParticle");
+	deathParticles_ = new DeathParticles;
+	deathParticles_->Initialize(modelDeathParticles_, &viewProjection_, position);
 
 }
 
@@ -228,6 +236,10 @@ void GameScene::Update() {
 
 	//全ての当たり判定を行う
 	CheckAllColisions();
+
+	if (deathParticles_) {
+		deathParticles_->Update();
+	}
 }
 
 void GameScene::Draw() {
@@ -274,6 +286,9 @@ void GameScene::Draw() {
 		}
 	}
 
+	if (deathParticles_) {
+		deathParticles_->Draw();
+	}
 	
 
 	// 3Dオブジェクト描画後処理

@@ -14,6 +14,8 @@
 #include "MapChipField.h"
 #include "CameraController.h"
 #include "Enemy.h"
+#include "DeathParticles.h"
+
 
 /// <summary>
 /// ゲームシーン
@@ -100,4 +102,7 @@ private: // メンバ変数
 	void GenerateBlocks();
 
 	void CheckAllColisions();
+
+	DeathParticles* deathParticles_ = nullptr;
+	Model* modelDeathParticles_ = nullptr;
 };

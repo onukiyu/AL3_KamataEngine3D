@@ -97,6 +97,11 @@ public:
 	// 衝突応用
 	void OnCollision(const Enemy* enemy);
 
+	
+
+	//デスフラグのgetter
+	bool IsDead() const { return isDead_; }
+
 	private: // メンバ変数
 
 	//ワールド変換データ
@@ -160,6 +165,7 @@ public:
 	//5.壁に接触している場合の処理
 	void CheckMapWall(const CollisionMapInfo& info);
 
-	
+	// デスフラグ
+	bool isDead_ = false;
 
 };

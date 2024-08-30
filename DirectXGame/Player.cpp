@@ -99,8 +99,12 @@ void Player::Update() {
 }
 void Player::Draw() {
 
-	//3Dモデルを描画
-	model_->Draw(worldTransform_, *viewProjection_);
+	if (isDead_ == false) {
+		//3Dモデルを描画
+		model_->Draw(worldTransform_, *viewProjection_);
+	}
+	
+
 }
 
 void Player::InputMove()
@@ -497,8 +501,8 @@ AABB Player::GetAABB() {
 
 void Player::OnCollision(const Enemy* enemy) { 
 	(void)enemy;
-	//ジャンプ開始(仮処理)
-	//velocity_ = Vector3(0, 1, 0);
+	//デスフラグを立てる
+	isDead_ = true;
 }
 
 

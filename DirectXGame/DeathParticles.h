@@ -16,6 +16,9 @@ public:
 
 	void Draw();
 
+	// デスフラグのgetter
+	bool IsFinished() const { return isFinished_; }
+
 private:
 	//パーティクルの個数
 	static inline const uint32_t kNumParticles = 8;

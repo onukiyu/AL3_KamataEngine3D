@@ -65,6 +65,15 @@ void Player::Update() {
 	worldTransform_.translation_.y = max(worldTransform_.translation_.y, -kMoveLimitY);
 	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kMoveLimitY);
 
+	//回転速さ[ラジアン/frame]
+	const float kRotSpeed = 0.02f;
+
+	//押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_A)) {
+		worldTransform_.rotation_.y -= kRotSpeed;
+	} else if (input_->PushKey(DIK_D)) {
+		worldTransform_.rotation_.y += kRotSpeed;
+	}
 
 
 	//キャラクターの座標を画面表示する処理
@@ -76,7 +85,7 @@ void Player::Update() {
 
 #endif // DEBUG
 
-	
+
 }
 
 void Player::Draw(ViewProjection& viewProjection) {

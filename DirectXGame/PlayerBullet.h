@@ -2,6 +2,7 @@
 
 #include "Vector3.h"
 #include "Model.h"
+#include "WorldTransform.h"
 //#include "WorldTransform.h"
 
 /// <summary>
@@ -24,5 +25,16 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	/// <>
+	/// <param name="viewProjection">ビュープロジェクション</param>
+	void Draw(const ViewProjection& viewProjection);
+	
+private:
+	// ワールド変換データ
+	WorldTransform worldTransform_;
+	// モデル
+	Model* model_ = nullptr;
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0u;
+
+
 };

@@ -3,10 +3,13 @@
 #include "WorldTransform.h"
 #include "Input.h"
 #include "PlayerBullet.h"
+#include <list>
 
 class Player {
 
 public:
+
+	~Player();
 
 	void Initialize(Model* model, uint32_t textureHandle);
 
@@ -28,5 +31,6 @@ private:
 	Input* input_ = nullptr;
 
 	//弾
-	PlayerBullet* bullet_ = nullptr;
+	//PlayerBullet* bullet_ = nullptr;
+	std::list<PlayerBullet*> bullets_;
 };

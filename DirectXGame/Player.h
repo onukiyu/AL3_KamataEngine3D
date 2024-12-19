@@ -18,6 +18,13 @@ public:
 	void Draw(ViewProjection& viewProjection);
 
 	void Attack();
+	
+	// ワールド座標を取得
+	Vector3 GetWorldPosition();
+
+	void OnCollision();
+
+	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 
 private:
 	//ワールド変換データ
@@ -33,4 +40,9 @@ private:
 	//弾
 	//PlayerBullet* bullet_ = nullptr;
 	std::list<PlayerBullet*> bullets_;
+
+	
+
+	
+	
 };

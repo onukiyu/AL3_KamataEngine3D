@@ -8,8 +8,9 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "Player.h"
 #include "DebugCamera.h"
+#include "Enemy.h"
+#include "Skydome.h"
 
 /// <summary>
 /// ゲームシーン
@@ -42,6 +43,9 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+
+	void CheckAllCollisions();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -63,9 +67,21 @@ private: // メンバ変数
 	// 自キャラ
 	Player* player_ = nullptr;
 
+	PlayerBullet* playerBullet_ = nullptr;
+
+	//敵
+	Enemy* enemy_ = nullptr;
+
+	//EnemyBullet* enemyBullet_ = nullptr;
+
 	// デバッグカメラ有効
 	bool isDebugCameraActive_ = false;
 
 	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
+
+	// 天球
+	Skydome* skyDome_ = nullptr;
+	// 3Dモデル
+	Model* modelSkydome_ = nullptr;
 };

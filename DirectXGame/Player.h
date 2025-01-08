@@ -26,6 +26,8 @@ public:
 
 	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 
+	int Gethitpoint() { return playerHp; }
+
 private:
 	//ワールド変換データ
 	WorldTransform worldTransform_;
@@ -34,6 +36,9 @@ private:
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
+	// ワールド変換データ
+	WorldTransform worldTransform2_;
+
 	//キーボード入力
 	Input* input_ = nullptr;
 
@@ -41,7 +46,8 @@ private:
 	//PlayerBullet* bullet_ = nullptr;
 	std::list<PlayerBullet*> bullets_;
 
-	
+	// 体力
+	int playerHp = 2;
 
 	
 	

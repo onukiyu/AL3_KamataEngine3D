@@ -68,6 +68,13 @@ void GameScene::Initialize() {
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 	// 天球の初期化
 	skyDome_->Initialize(modelSkydome_);
+
+	//audio_ = Audio::GetInstance();
+
+	// サウンドデータの読み込み
+	soundDataHandle_ = audio_->LoadWave("integrate.wav");
+	//音声再生
+	voiceHandle_= audio_->PlayWave(soundDataHandle_, true);
 }
 
 void GameScene::Update() {
@@ -108,6 +115,20 @@ void GameScene::Update() {
 
 	// 天球の更新
 	skyDome_->Update();
+
+	//audio_->StopWave(voiceHandle_);
+
+	if (player_->Gethitpoint() <= 0) {
+		// 音声停止
+		audio_->StopWave(voiceHandle_);
+		isfinished_ = true;
+	}
+
+	if (enemy_->Gethitpoint() <= 0) {
+		// 音声停止
+		audio_->StopWave(voiceHandle_);
+		iscleared_ = true;
+	}
 }
 
 void GameScene::Draw() {

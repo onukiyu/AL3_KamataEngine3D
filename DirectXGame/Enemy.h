@@ -19,7 +19,7 @@ public:
 
 	void Fire();
 
-
+	int Gethitpoint() { return enemyHp; }
 
 	// 発射感覚
 	static const int kFireIniterval = 60;
@@ -69,4 +69,6 @@ private:
 
 	// 発射タイマー
 	int32_t fireTimer_ = 0;
+
+	int enemyHp = 20;
 };

@@ -2,9 +2,14 @@
 #include "MathUtilityForText.h"
 #include "Vector3.h"
 #include <cassert>
-#include "imgui.h"
-#include "imgui_impl_dx12.h"
-#include "imgui_impl_win32.h"
+
+#ifdef _DEBUG
+
+	#include "imgui.h"
+	#include "imgui_impl_dx12.h"
+	#include "imgui_impl_win32.h"
+#endif
+
 
 Player::~Player() {
 	for (PlayerBullet* bullet : bullets_) {
@@ -70,6 +75,8 @@ void Player::Update() {
 	worldTransform_.translation_ += move;
 
 	worldTransform_.UpdateMatrix();
+
+	//worldTransform2_.UpdateMatrix();
 
 	//移動限界座標
 	const float kMoveLimitX = 34;
@@ -166,4 +173,6 @@ Vector3 Player::GetWorldPosition() {
 	return worldPos;
 }
 
-void Player::OnCollision() {}
+void Player::OnCollision() {
+	playerHp -= 1; 
+}

@@ -46,6 +46,10 @@ public: // メンバ関数
 
 	void CheckAllCollisions();
 
+	bool finish() { return isfinished_; }
+
+	bool clear() { return iscleared_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -84,4 +88,14 @@ private: // メンバ変数
 	Skydome* skyDome_ = nullptr;
 	// 3Dモデル
 	Model* modelSkydome_ = nullptr;
+
+	// サウンドデータハンドル
+	uint32_t soundDataHandle_ = 0;
+
+	// 音声再生ハンドル
+	uint32_t voiceHandle_ = 0;
+
+	bool isfinished_ = false;
+
+	bool iscleared_ = false;
 };

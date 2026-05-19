@@ -102,7 +102,7 @@ public:
 	//デスフラグのgetter
 	bool IsDead() const { return isDead_; }
 
-	private: // メンバ変数
+private: // メンバ変数
 
 	//ワールド変換データ
 	WorldTransform worldTransform_;
